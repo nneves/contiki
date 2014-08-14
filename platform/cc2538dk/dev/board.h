@@ -114,6 +114,7 @@
  * UART1_* below.
  * @{
  */
+
 #define UART0_RX_PORT            GPIO_A_NUM
 #define UART0_RX_PIN             0
 

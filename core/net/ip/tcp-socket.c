@@ -41,6 +41,11 @@
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
+// Disable printf debug 
+#if 1
+  #define printf(...) printf("")
+#endif
+
 LIST(socketlist);
 /*---------------------------------------------------------------------------*/
 PROCESS(tcp_socket_process, "TCP socket process");
