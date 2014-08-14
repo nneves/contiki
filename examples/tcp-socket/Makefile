@@ -1,4 +1,4 @@
-all: tcp-server
+all: tcp-server dual-uart-test
 
 CONTIKI=../..
 
