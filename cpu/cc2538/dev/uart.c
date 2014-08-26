@@ -79,6 +79,18 @@
 #error Contiki is configured to use UART0, but its pads are not valid
 #endif
 
+// NNEVES: Add UART0 CTS RTS 
+#ifndef UART0_CTS_PORT
+#define UART0_CTS_PORT           (-1)
+#endif
+#ifndef UART0_CTS_PIN
+#define UART0_CTS_PIN            (-1)
+#endif
+#if UART0_CTS_PORT >= 0 && UART0_CTS_PIN < 0  || \
+    UART0_CTS_PORT < 0  && UART0_CTS_PIN >= 0
+#error Both UART0_CTS_PORT and UART0_CTS_PIN must be valid or invalid
+#endif
+
 #ifndef UART1_RX_PORT
 #define UART1_RX_PORT            (-1)
 #endif
@@ -179,8 +191,8 @@ static const uart_regs_t uart_regs[UART_INSTANCE_COUNT] = {
     .fbrd = BAUD2FBRD(UART0_CONF_BAUD_RATE),
     .rx = {UART0_RX_PORT, UART0_RX_PIN},
     .tx = {UART0_TX_PORT, UART0_TX_PIN},
-    .cts = {-1, -1},
-    .rts = {-1, -1},
+    .cts = {UART0_CTS_PORT, UART0_CTS_PIN},
+    .rts = {UART0_RTS_PORT, UART0_RTS_PIN},
     .nvic_int = NVIC_INT_UART0
   }, {
     .sys_ctrl_rcgcuart_uart = SYS_CTRL_RCGCUART_UART1,
@@ -312,18 +324,19 @@ uart_init(uint8_t uart)
    * Enable hardware flow control (RTS/CTS) if requested.
    * Note that hardware flow control is available only on UART1.
    */
+  // NNEVES: change UART1 to UART0
   if(regs->cts.port >= 0) {
-    REG(IOC_UARTCTS_UART1) = ioc_input_sel(regs->cts.port, regs->cts.pin);
+    REG(IOC_UARTCTS_UART0) = ioc_input_sel(regs->cts.port, regs->cts.pin);
     GPIO_PERIPHERAL_CONTROL(GPIO_PORT_TO_BASE(regs->cts.port), GPIO_PIN_MASK(regs->cts.pin));
     ioc_set_over(regs->cts.port, regs->cts.pin, IOC_OVERRIDE_DIS);
-    REG(UART_1_BASE | UART_CTL) |= UART_CTL_CTSEN;
+    REG(UART_0_BASE | UART_CTL) |= UART_CTL_CTSEN;
   }
 
   if(regs->rts.port >= 0) {
-    ioc_set_sel(regs->rts.port, regs->rts.pin, IOC_PXX_SEL_UART1_RTS);
+    ioc_set_sel(regs->rts.port, regs->rts.pin, IOC_PXX_SEL_UART0_RTS);
     GPIO_PERIPHERAL_CONTROL(GPIO_PORT_TO_BASE(regs->rts.port), GPIO_PIN_MASK(regs->rts.pin));
     ioc_set_over(regs->rts.port, regs->rts.pin, IOC_OVERRIDE_OE);
-    REG(UART_1_BASE | UART_CTL) |= UART_CTL_RTSEN;
+    REG(UART_0_BASE | UART_CTL) |= UART_CTL_RTSEN;
   }
 
   /* UART Enable */

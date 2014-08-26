@@ -124,6 +124,8 @@
  */
 #define IOC_UARTRXD_UART0           0x400D4100  /**< UART0 RX */
 #define IOC_UARTCTS_UART1           0x400D4104  /**< UART1 CTS */
+// NNEVES
+#define IOC_UARTCTS_UART0           0x400D4104  /**< UART0 CTS */
 #define IOC_UARTRXD_UART1           0x400D4108  /**< UART1 RX */
 #define IOC_CLK_SSI_SSI0            0x400D410C  /**< SSI0 Clock */
 #define IOC_SSIRXD_SSI0             0x400D4110  /**< SSI0 RX */
@@ -195,6 +197,8 @@
  */
 #define IOC_PXX_SEL_UART0_TXD       0x00000000
 #define IOC_PXX_SEL_UART1_RTS       0x00000001
+// NNEVES
+#define IOC_PXX_SEL_UART0_RTS       0x00000001
 #define IOC_PXX_SEL_UART1_TXD       0x00000002
 #define IOC_PXX_SEL_SSI0_TXD        0x00000003
 #define IOC_PXX_SEL_SSI0_CLKOUT     0x00000004
