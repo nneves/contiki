@@ -118,8 +118,8 @@ PROCESS_THREAD(cc2538_uart_demo_process, ev, data)
     if(ev == PROCESS_EVENT_TIMER) {
       leds_on(LEDS_PERIODIC);
  
-      sprintf(string0, "Test 0x%02x to UART0\n", counter);
-      sprintf(string1, "Test 0x%02x to UART1\n", counter);
+      sprintf(string0, "Test 0x%02x to UART0\r\n", counter);
+      sprintf(string1, "Test 0x%02x to UART1\r\n", counter);
  
       uart0_send_bytes((uint8_t *)string0,sizeof(string0)-1);
       uart1_send_bytes((uint8_t *)string1,sizeof(string1)-1);
