@@ -99,7 +99,7 @@ static void
 broadcast_recv(struct broadcast_conn *c, const linkaddr_t *from)
 {
   leds_toggle(LEDS_RF_RX);
-  printf("Received %u bytes: '0x%04x'\n", packetbuf_datalen(),
+  printf("Received %u bytes: '0x%04x'\r\n", packetbuf_datalen(),
          *(uint16_t *)packetbuf_dataptr());
 }
 /*---------------------------------------------------------------------------*/
@@ -131,18 +131,18 @@ PROCESS_THREAD(cc2538_demo_process, ev, data)
 
     if(ev == PROCESS_EVENT_TIMER) {
       leds_on(LEDS_PERIODIC);
-      printf("-----------------------------------------\n"
-             "Counter = 0x%08x\n", counter);
+      printf("-----------------------------------------\r\n"
+             "Counter = 0x%08x\r\n", counter);
 
       value = adc_sensor.value(ADC_SENSOR_VDD_3);
-      printf("VDD = %d mV\n", value * (3 * 1190) / (2047 << 4));
+      printf("VDD = %d mV\r\n", value * (3 * 1190) / (2047 << 4));
 
       value = adc_sensor.value(ADC_SENSOR_TEMP);
-      printf("Temperature = %d mC\n",
+      printf("Temperature = %d mC\r\n",
              25000 + ((value >> 4) - 1422) * 10000 / 42);
 
       value = adc_sensor.value(ADC_SENSOR_ALS);
-      printf("Ambient light sensor = %d raw\n", value);
+      printf("Ambient light sensor = %d raw\r\n", value);
 
       etimer_set(&et, CLOCK_SECOND);
       rtimer_set(&rt, RTIMER_NOW() + LEDS_OFF_HYSTERISIS, 1,

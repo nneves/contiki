@@ -4,7 +4,7 @@ all: $(CONTIKI_PROJECT)
 CONTIKI=../../..
 
 UIP_CONF_IPV6=1
-CFLAGS+= -DUIP_CONF_IPV6_RPL
+#CFLAGS+= -DUIP_CONF_IPV6_RPL
 
 #linker optimizations
 SMALL=1

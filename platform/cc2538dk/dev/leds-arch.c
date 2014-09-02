@@ -44,6 +44,7 @@
 #include "reg.h"
 #include "dev/leds.h"
 #include "dev/gpio.h"
+#include "dev/ioc.h" 
 
 #define LEDS_GPIO_PIN_MASK   LEDS_ALL
 /*---------------------------------------------------------------------------*/
@@ -51,6 +52,11 @@ void
 leds_arch_init(void)
 {
   GPIO_SET_OUTPUT(GPIO_C_BASE, LEDS_GPIO_PIN_MASK);
+
+  ioc_set_over(GPIO_C_BASE, LEDS_GREEN, IOC_OVERRIDE_PUE);
+  ioc_set_over(GPIO_C_BASE, LEDS_YELLOW, IOC_OVERRIDE_PUE);
+  ioc_set_over(GPIO_C_BASE, LEDS_ORANGE, IOC_OVERRIDE_PUE);
+  ioc_set_over(GPIO_C_BASE, LEDS_RED, IOC_OVERRIDE_PUE);
 }
 /*---------------------------------------------------------------------------*/
 unsigned char

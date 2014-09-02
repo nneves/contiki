@@ -36,5 +36,9 @@ BSL = $(CONTIKI)/tools/cc2538-bsl/cc2538-bsl.py
 ifeq ($(wildcard $(BSL)), )
 	@echo "ERROR: Could not find the cc2538-bsl script. Did you run 'git submodule update --init' ?"
 else
-	python $(BSL) -e -w -v $<
+	python $(BSL) -p /dev/ttyUSB0 -b 115200 -V -e -w -v $<
 endif
+
+%.remoteupload: %.bin
+	scp $< debian@192.168.233.84:/home/debian/work/contiki/$<
+	ssh debian@192.168.233.84 -f '/home/debian/work/contiki/cc2538-flash-firmware.sh /home/debian/work/contiki/$<'
